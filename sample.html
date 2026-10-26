@@ -1,0 +1,1294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b32">
+  <meta name="description" content="AlgoFilipino is a nonprofit initiative advancing technology education through the Filipino language. Wika. Teknolohiya. Kaalaman. Para sa Pilipino.">
+  <meta property="og:title" content="AlgoFilipino | Wika at Teknolohiya">
+  <meta property="og:description" content="Making technology more accessible through the Filipino language.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://algofilipino.pages.dev/">
+  <title>AlgoFilipino — Wika at Teknolohiya</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #101b32;
+      --navy-2: #182743;
+      --navy-3: #223451;
+      --gold: #f4c95d;
+      --gold-light: #ffe6a0;
+      --paper: #f7f6f0;
+      --white: #ffffff;
+      --muted: #aab5c8;
+      --ink: #17243a;
+      --line: rgba(255,255,255,.12);
+      --radius: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    img, svg { max-width: 100%; }
+    ::selection { background: var(--gold); color: var(--navy); }
+
+    .container {
+      width: min(var(--max), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .mono {
+      font-family: "DM Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #a27c1c;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 27px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .section { padding: 108px 0; }
+    .section-heading {
+      max-width: 700px;
+      margin-bottom: 48px;
+    }
+    .section-heading h2 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 5vw, 58px);
+      letter-spacing: -.055em;
+      line-height: 1.12;
+      font-weight: 700;
+    }
+    .section-heading p {
+      max-width: 590px;
+      font-size: 15px;
+      line-height: 1.9;
+      color: #667085;
+    }
+
+    .btn {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 21px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      transition: .25s ease;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      color: white;
+      border-color: rgba(255,255,255,.28);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-dark { background: var(--navy); color: white; }
+    .btn-dark:hover { background: var(--navy-3); }
+
+    /* Navigation */
+    .header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1000;
+      height: 82px;
+      background: rgba(16,27,50,.90);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .header.scrolled {
+      border-color: var(--line);
+      box-shadow: 0 8px 35px rgba(0,0,0,.12);
+    }
+    .nav {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .brand-name { font-size: 17px; font-weight: 800; letter-spacing: -.04em; }
+    .brand-sub {
+      display: block;
+      margin-top: 3px;
+      color: var(--gold);
+      font: 9px "DM Mono", monospace;
+      letter-spacing: .12em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 27px; }
+    .nav-links > a:not(.btn) {
+      color: #d4dbea;
+      font-size: 11px;
+      font-weight: 700;
+      transition: color .2s;
+    }
+    .nav-links > a:not(.btn):hover,
+    .nav-links > a.active { color: var(--gold); }
+    .nav-links .btn { min-height: 42px; padding: 11px 16px; }
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: white;
+      border-radius: 10px;
+      font-size: 22px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 790px;
+      padding: 160px 0 80px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      color: white;
+      background:
+        radial-gradient(ellipse at 82% 32%, rgba(50,83,125,.35), transparent 42%),
+        radial-gradient(ellipse at 10% 90%, rgba(244,201,93,.09), transparent 36%),
+        var(--navy);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .15;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to right, transparent, black);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "ᜀᜎ᜔ᜄᜓ";
+      position: absolute;
+      right: -25px;
+      top: 15%;
+      font-size: clamp(150px, 25vw, 340px);
+      color: rgba(244,201,93,.035);
+      font-weight: 800;
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      align-items: center;
+      gap: 60px;
+    }
+    .hero .eyebrow { color: var(--gold); }
+    .hero h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(43px, 6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: -.065em;
+      font-weight: 800;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-copy {
+      max-width: 520px;
+      margin: 25px 0 30px;
+      color: #bdc7d8;
+      font-size: 15px;
+      line-height: 1.95;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #aab5c8;
+      font-size: 11px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(244,201,93,.12);
+    }
+
+    /* Interactive code visual */
+    .code-window {
+      position: relative;
+      padding: 23px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 17px;
+      background: rgba(26,42,68,.86);
+      box-shadow: 0 35px 100px rgba(0,0,0,.25);
+      transform: rotate(1deg);
+    }
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: #9ba9bf;
+      font: 10px "DM Mono", monospace;
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 7px; height: 7px; border-radius: 50%; background: #53637c; }
+    .dots i:first-child { background: #ef8c80; }
+    .dots i:nth-child(2) { background: var(--gold); }
+    .dots i:nth-child(3) { background: #7bc9a4; }
+    .code-body {
+      padding: 23px 0 8px;
+      font: 12px/2.1 "DM Mono", monospace;
+      overflow-x: auto;
+    }
+    .code-line { white-space: nowrap; }
+    .ln { display: inline-block; width: 27px; color: #667791; }
+    .purple { color: #c5a5ff; }
+    .green { color: #91d6a7; }
+    .yellow { color: var(--gold); }
+    .blue { color: #83caff; }
+    .code-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+      color: #aab5c8;
+      font: 9px "DM Mono", monospace;
+    }
+    .code-footer span:last-child { color: var(--gold); }
+
+    /* Feature strip */
+    .feature-strip {
+      position: relative;
+      z-index: 2;
+      margin-top: -1px;
+      background: var(--gold);
+    }
+    .feature-inner {
+      min-height: 104px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      align-items: center;
+    }
+    .feature {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      padding: 20px;
+      border-right: 1px solid rgba(16,27,50,.15);
+    }
+    .feature:last-child { border: 0; }
+    .feature-icon { font-size: 23px; }
+    .feature strong { display: block; font-size: 13px; }
+    .feature small { display: block; margin-top: 4px; font-size: 10px; color: #514520; }
+
+    /* Mission */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      align-items: start;
+      gap: 90px;
+    }
+    .mission-lead {
+      position: sticky;
+      top: 120px;
+    }
+    .mission-lead h2 {
+      margin: 0;
+      font-size: clamp(38px,5vw,61px);
+      line-height: 1.08;
+      letter-spacing: -.06em;
+    }
+    .mission-lead h2 span { color: #b58a25; }
+    .mission-copy > p {
+      margin: 0 0 22px;
+      color: #667085;
+      font-size: 14px;
+      line-height: 2;
+    }
+    .mission-quote {
+      margin-top: 32px;
+      padding: 25px 28px;
+      border-left: 3px solid var(--gold);
+      background: #eeece4;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.7;
+    }
+    .mission-quote small {
+      display: block;
+      margin-top: 12px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #737b89;
+    }
+
+    /* Focus cards */
+    .focus-section { background: #ecebe4; }
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+    }
+    .focus-card {
+      position: relative;
+      min-height: 310px;
+      padding: 31px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(16,27,50,.07);
+      border-radius: var(--radius);
+      background: #faf9f5;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .focus-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 45px rgba(16,27,50,.08);
+    }
+    .focus-card .number {
+      color: #a27c1c;
+      font: 11px "DM Mono", monospace;
+    }
+    .focus-icon {
+      width: 53px;
+      height: 53px;
+      display: grid;
+      place-items: center;
+      margin: 30px 0 22px;
+      border-radius: 14px;
+      background: var(--navy);
+      color: var(--gold);
+      font-size: 24px;
+    }
+    .focus-card h3 { margin: 0 0 12px; font-size: 19px; letter-spacing: -.04em; }
+    .focus-card p { margin: 0; color: #6b7280; font-size: 12px; line-height: 1.9; }
+    .focus-card .arrow { position: absolute; top: 29px; right: 29px; color: #a27c1c; }
+
+    /* Learning */
+    .learning {
+      background: var(--navy);
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+    .learning .section-heading p { color: #aab5c8; }
+    .learning .eyebrow { color: var(--gold); }
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 18px;
+    }
+    .learning-card {
+      padding: 29px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+      transition: background .25s, border-color .25s;
+    }
+    .learning-card:hover {
+      background: rgba(255,255,255,.07);
+      border-color: rgba(244,201,93,.4);
+    }
+    .learning-card .tag {
+      color: var(--gold);
+      font: 10px "DM Mono", monospace;
+    }
+    .learning-card h3 { margin: 17px 0 11px; font-size: 20px; }
+    .learning-card p { margin: 0; color: #aab5c8; font-size: 12px; line-height: 1.9; }
+    .learning-bottom {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 27px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .learning-bottom p { color: #aab5c8; font-size: 12px; line-height: 1.8; }
+
+    /* Community */
+    .community-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+    .community-visual {
+      min-height: 390px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px;
+      border-radius: 20px;
+      color: white;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(244,201,93,.22), transparent 30%),
+        linear-gradient(145deg,#243b5b,#101b32);
+    }
+    .community-visual::before {
+      content: "</>";
+      position: absolute;
+      right: -12px;
+      bottom: 10px;
+      color: rgba(244,201,93,.12);
+      font: 150px "DM Mono", monospace;
+      transform: rotate(-9deg);
+    }
+    .community-visual .mono { color: var(--gold); font-size: 10px; }
+    .community-visual h3 {
+      position: relative;
+      z-index: 1;
+      max-width: 390px;
+      font-size: clamp(30px,4vw,47px);
+      line-height: 1.13;
+      letter-spacing: -.05em;
+    }
+    .community-visual p { position: relative; z-index: 1; color: #c3cddd; font-size: 12px; }
+    .community-copy h2 {
+      margin: 0 0 18px;
+      font-size: clamp(34px,4vw,49px);
+      line-height: 1.1;
+      letter-spacing: -.055em;
+    }
+    .community-copy > p { color: #667085; font-size: 13px; line-height: 2; }
+    .community-list { list-style: none; margin: 26px 0; padding: 0; }
+    .community-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e3e1d8;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .check {
+      width: 23px;
+      height: 23px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f1dfaa;
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    /* Join CTA */
+    .join { padding: 0 0 105px; background: var(--paper); }
+    .join-box {
+      position: relative;
+      overflow: hidden;
+      padding: 62px;
+      border-radius: 22px;
+      background: var(--gold);
+    }
+    .join-box::after {
+      content: "{ }";
+      position: absolute;
+      right: 20px;
+      top: -50px;
+      color: rgba(16,27,50,.07);
+      font: 210px "DM Mono", monospace;
+      pointer-events: none;
+    }
+    .join-box > * { position: relative; z-index: 1; }
+    .join-box .eyebrow { color: #69551e; }
+    .join-box h2 {
+      max-width: 730px;
+      margin: 0 0 18px;
+      font-size: clamp(36px,5vw,57px);
+      line-height: 1.08;
+      letter-spacing: -.06em;
+    }
+    .join-box p { max-width: 610px; margin-bottom: 27px; font-size: 13px; line-height: 1.9; color: #554a2e; }
+    .join-box .btn { background: var(--navy); color: white; }
+    .join-box .btn:hover { background: var(--navy-3); }
+
+    /* FAQ */
+    .faq-section { background: #eeece5; }
+    .faq-list { max-width: 800px; }
+    .faq-item { border-bottom: 1px solid #d7d5cc; }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .faq-question span:last-child { color: #a27c1c; font-size: 23px; }
+    .faq-answer { display: none; max-width: 690px; padding: 0 35px 22px 0; color: #667085; font-size: 13px; line-height: 1.9; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-question span:last-child { transform: rotate(45deg); }
+
+    /* Footer */
+    .footer { background: #0b1426; color: white; padding: 66px 0 24px; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .7fr .8fr;
+      gap: 60px;
+      padding-bottom: 50px;
+    }
+    .footer-about p { max-width: 360px; color: #9ba8bd; font-size: 12px; line-height: 2; }
+    .footer h4 { margin: 0 0 19px; color: var(--gold); font-size: 11px; letter-spacing: .05em; }
+    .footer-links { display: flex; flex-direction: column; gap: 13px; }
+    .footer-links a { color: #b7c1d1; font-size: 11px; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: #77869e;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+    .footer-bottom a { color: #b7c1d1; }
+
+    /* Cookie notice */
+    .cookie-banner {
+      position: fixed;
+      z-index: 2000;
+      left: 22px;
+      bottom: 22px;
+      width: min(410px, calc(100% - 44px));
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      color: white;
+      background: #14223b;
+      box-shadow: 0 18px 70px rgba(0,0,0,.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px);
+      transition: .3s ease;
+    }
+    .cookie-banner.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .cookie-banner h3 { margin: 0 0 9px; font-size: 14px; }
+    .cookie-banner p { margin: 0; color: #b7c1d1; font-size: 11px; line-height: 1.8; }
+    .cookie-banner a { color: var(--gold); text-decoration: underline; }
+    .cookie-actions { display: flex; gap: 9px; margin-top: 17px; }
+    .cookie-actions button {
+      flex: 1;
+      min-height: 39px;
+      padding: 8px;
+      border-radius: 7px;
+      border: 1px solid #44536a;
+      background: transparent;
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .cookie-actions .accept { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+    /* Scroll-to-top */
+    .back-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 900;
+      width: 43px;
+      height: 43px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      color: var(--navy);
+      background: var(--gold);
+      font-size: 19px;
+      opacity: 0;
+      visibility: hidden;
+      transition: .2s;
+    }
+    .back-top.visible { opacity: 1; visibility: visible; }
+    .cookie-banner.visible ~ .back-top { bottom: 22px; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    :focus-visible { outline: 3px solid #b58a25; outline-offset: 4px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 980px) {
+      .nav-links { gap: 15px; }
+      .nav-links > a:not(.btn) { font-size: 10px; }
+      .hero-grid { gap: 35px; }
+      .mission-grid { gap: 45px; }
+      .focus-card { padding: 24px; }
+      .footer-grid { gap: 35px; }
+    }
+
+    @media (max-width: 760px) {
+      .container { width: min(100% - 36px, var(--max)); }
+      .section { padding: 78px 0; }
+      .header { height: 72px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links {
+        position: fixed;
+        inset: 72px 0 0;
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 22px 24px 40px;
+        background: var(--navy);
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: .25s ease;
+        overflow-y: auto;
+      }
+      .nav-links.open { visibility: visible; opacity: 1; transform: translateY(0); }
+      .nav-links > a:not(.btn) { padding: 19px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+      .nav-links .btn { margin-top: 22px; }
+      .hero { min-height: auto; padding: 130px 0 65px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 45px; }
+      .hero h1 { font-size: clamp(43px, 11vw, 65px); }
+      .hero-copy { font-size: 13px; }
+      .code-window { max-width: 500px; width: 100%; margin: auto; transform: none; }
+      .feature-inner { grid-template-columns: 1fr; padding: 12px 0; }
+      .feature { justify-content: flex-start; border-right: 0; border-bottom: 1px solid rgba(16,27,50,.15); padding: 16px 5px; }
+      .feature:last-child { border-bottom: 0; }
+      .mission-grid, .community-grid { grid-template-columns: 1fr; gap: 35px; }
+      .mission-lead { position: static; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-card { min-height: 260px; }
+      .learning-grid { grid-template-columns: 1fr; }
+      .learning-bottom { align-items: flex-start; flex-direction: column; }
+      .community-visual { min-height: 320px; }
+      .join { padding-bottom: 78px; }
+      .join-box { padding: 34px 25px; }
+      .join-box::after { font-size: 120px; right: -15px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px 24px; }
+      .footer-about { grid-column: 1 / -1; }
+      .footer { padding-top: 55px; }
+      .cookie-banner { left: 12px; bottom: 12px; width: calc(100% - 24px); }
+      .back-top { right: 12px; bottom: 12px; }
+    }
+
+    @media (max-width: 380px) {
+      .container { width: calc(100% - 28px); }
+      .brand-name { font-size: 15px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-about { grid-column: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header" id="header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="AlgoFilipino home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M4 7h7l-4 7 4 7H4M15 7l5 14M24 7l-5 14"
+              stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>
+          <span class="brand-name">AlgoFilipino</span>
+          <span class="brand-sub">WIKA AT TEKNOLOHIYA</span>
+        </span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle"
+        aria-label="Open navigation" aria-expanded="false"
+        aria-controls="navLinks">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#focus">Our Focus</a>
+        <a href="#learning">Learning</a>
+        <a href="#community">Community</a>
+        <a class="btn btn-gold" href="#join">Get Involved ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow mono">Technology for every Filipino</div>
+          <h1>Ang teknolohiya, <span>mas madaling maunawaan</span> sa sariling wika.</h1>
+          <p class="hero-copy">
+            We believe that language should never be a barrier to learning.
+            AlgoFilipino promotes a more accessible way to understand
+            programming and technology through Filipino.
+          </p>
+          <div class="hero-actions">
+            <a href="#about" class="btn btn-gold">Discover our mission <span>↗</span></a>
+            <a href="https://www.facebook.com/AlgoFilipino"
+              target="_blank" rel="noopener noreferrer"
+              class="btn btn-outline">Visit our Facebook ↗</a>
+          </div>
+          <div class="hero-note">
+            <span class="status-dot"></span>
+            <span>Wika. Teknolohiya. Kaalaman. Para sa Pilipino.</span>
+          </div>
+        </div>
+
+        <div class="code-window" aria-label="Illustration of programming concepts">
+          <div class="code-top">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <span>kaalaman.py</span>
+            <span>UTF-8</span>
+          </div>
+          <div class="code-body">
+            <div class="code-line"><span class="ln">01</span><span class="purple">class</span> <span class="yellow">Kinabukasan</span>:</div>
+            <div class="code-line"><span class="ln">02</span>&nbsp;&nbsp;<span class="purple">def</span> <span class="blue">__init__</span>(self):</div>
+            <div class="code-line"><span class="ln">03</span>&nbsp;&nbsp;&nbsp;&nbsp;self.wika = <span class="green">"Filipino"</span></div>
+            <div class="code-line"><span class="ln">04</span>&nbsp;&nbsp;&nbsp;&nbsp;self.layunin = <span class="green">"Pagkatuto"</span></div>
+            <div class="code-line"><span class="ln">05</span></div>
+            <div class="code-line"><span class="ln">06</span>&nbsp;&nbsp;<span class="purple">def</span> <span class="blue">matuto</span>(self, lahat):</div>
+            <div class="code-line"><span class="ln">07</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="purple">return</span> <span class="green">"Teknolohiya para sa lahat"</span></div>
+            <div class="code-line"><span class="ln">08</span></div>
+            <div class="code-line"><span class="ln">09</span><span class="yellow"># Sama-sama tayong matuto.</span></div>
+          </div>
+          <div class="code-footer">
+            <span>LEARNING THROUGH LANGUAGE</span>
+            <span>● READY TO LEARN</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-strip" aria-label="Our principles">
+      <div class="container feature-inner">
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">⌘</span>
+          <div><strong>Technology</strong><small>Understand the digital world</small></div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">文</span>
+          <div><strong>Wikang Filipino</strong><small>Learn in a familiar language</small></div>
+        </div>
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">✳</span>
+          <div><strong>Community</strong><small>Grow through shared knowledge</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container mission-grid">
+        <div class="mission-lead reveal">
+          <div class="eyebrow mono">01 / Who we are</div>
+          <h2>Technology is for everyone. <span>Understanding starts with language.</span></h2>
+        </div>
+        <div class="mission-copy reveal">
+          <p>
+            AlgoFilipino is a nonprofit initiative that aims to enrich the
+            way Filipinos learn programming and other technologies by making
+            technical concepts more understandable through the Filipino language.
+          </p>
+          <p>
+            We envision a learning environment where students, young people,
+            and technology enthusiasts can explore digital skills without
+            feeling that English proficiency is a prerequisite to understanding
+            how technology works.
+          </p>
+          <p>
+            Our advocacy is simple: make knowledge more accessible, encourage
+            curiosity, and help more Filipinos participate in the digital world.
+            Technology has its own language, but learning it can begin in ours.
+          </p>
+          <div class="mission-quote">
+            "Hindi dapat maging hadlang ang wika sa pagkatuto."
+            <small>OUR GUIDING PRINCIPLE</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section focus-section" id="focus">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow mono">02 / Our focus</div>
+          <h2>Building a bridge between language and technology.</h2>
+          <p>
+            We want to make complex concepts easier to approach and encourage
+            a culture of learning, sharing, and creating among Filipinos.
+          </p>
+        </div>
+
+        <div class="focus-grid">
+          <article class="focus-card reveal">
+            <span class="number">01 / LEARN</span>
+            <span class="focus-icon" aria-hidden="true">&lt;/&gt;</span>
+            <h3>Technology Education</h3>
+            <p>
+              Explore programming, digital tools, and technical concepts
+              through approachable explanations and Filipino-language learning.
+            </p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="focus-card reveal">
+            <span class="number">02 / UNDERSTAND</span>
+            <span class="focus-icon" aria-hidden="true">文</span>
+            <h3>Filipino as a Learning Tool</h3>
+            <p>
+              Bridge unfamiliar terminology and everyday understanding so
+              more learners can engage with technology confidently.
+            </p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="focus-card reveal">
+            <span class="number">03 / CREATE</span>
+            <span class="focus-icon" aria-hidden="true">✳</span>
+            <h3>Community and Innovation</h3>
+            <p>
+              Encourage students and young people to share knowledge,
+              collaborate, ask questions, and develop their digital skills.
+            </p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section learning" id="learning">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow mono">03 / Explore technology</div>
+          <h2>Start with curiosity. Grow through knowledge.</h2>
+          <p>
+            Technology becomes less intimidating when ideas are explained
+            clearly. These are suggested learning themes that can guide future
+            AlgoFilipino educational content.
+          </p>
+        </div>
+
+        <div class="learning-grid">
+          <article class="learning-card reveal">
+            <span class="tag">01 — PROGRAMMING</span>
+            <h3>Pag-unawa sa Code</h3>
+            <p>
+              Discover programming logic, variables, conditions, and loops
+              through simple explanations and practical examples.
+            </p>
+          </article>
+          <article class="learning-card reveal">
+            <span class="tag">02 — WEB DEVELOPMENT</span>
+            <h3>Pagbuo ng Website</h3>
+            <p>
+              Learn how HTML, CSS, and JavaScript work together to create
+              interactive digital experiences.
+            </p>
+          </article>
+          <article class="learning-card reveal">
+            <span class="tag">03 — DIGITAL LITERACY</span>
+            <h3>Matalinong Paggamit ng Teknolohiya</h3>
+            <p>
+              Build a better understanding of online safety, digital tools,
+              responsible technology use, and the internet.
+            </p>
+          </article>
+          <article class="learning-card reveal">
+            <span class="tag">04 — EMERGING TECHNOLOGY</span>
+            <h3>Pagkilala sa Bagong Teknolohiya</h3>
+            <p>
+              Explore topics such as artificial intelligence, automation,
+              and emerging digital innovations in accessible language.
+            </p>
+          </article>
+        </div>
+
+        <div class="learning-bottom reveal">
+          <p>
+            Want to learn with us or suggest a topic?<br>
+            Help us identify what Filipino learners want to understand.
+          </p>
+          <a class="btn btn-gold" href="https://www.facebook.com/AlgoFilipino"
+            target="_blank" rel="noopener noreferrer">Connect on Facebook ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="container community-grid">
+        <div class="community-visual reveal">
+          <span class="mono">04 / Sama-sama sa pagkatuto</span>
+          <h3>Mas maraming natututo kapag mas maraming nakauunawa.</h3>
+          <p>Knowledge grows when it is shared.</p>
+        </div>
+
+        <div class="community-copy reveal">
+          <div class="eyebrow mono">A place to grow</div>
+          <h2>Be part of a more accessible digital future.</h2>
+          <p>
+            We believe that students, educators, developers, and technology
+            enthusiasts all have something valuable to contribute. By sharing
+            knowledge in a language people understand, we can help make
+            learning more welcoming.
+          </p>
+          <ul class="community-list">
+            <li><span class="check">✓</span><span>Share ideas that make technology easier to understand.</span></li>
+            <li><span class="check">✓</span><span>Encourage Filipino learners to explore digital skills.</span></li>
+            <li><span class="check">✓</span><span>Support a community that values curiosity and collaboration.</span></li>
+          </ul>
+          <a class="btn btn-dark" href="https://www.facebook.com/AlgoFilipino"
+            target="_blank" rel="noopener noreferrer">Join the conversation ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="join" id="join">
+      <div class="container">
+        <div class="join-box reveal">
+          <div class="eyebrow mono">05 / Get involved</div>
+          <h2>Ang susunod na innovator, maaaring ikaw.</h2>
+          <p>
+            Be part of a community that believes technology should be
+            understandable and accessible. Follow AlgoFilipino for updates,
+            educational content, and opportunities to connect.
+          </p>
+          <a class="btn" href="https://www.facebook.com/AlgoFilipino"
+            target="_blank" rel="noopener noreferrer">
+            Follow AlgoFilipino on Facebook ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow mono">06 / Frequently asked questions</div>
+          <h2>Getting to know AlgoFilipino.</h2>
+          <p>A quick introduction to our advocacy and the ideas behind it.</p>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is AlgoFilipino?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              AlgoFilipino is a nonprofit initiative focused on making
+              programming and technology more understandable through the
+              Filipino language.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Why use Filipino to explain technology?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Learning in a familiar language can help people engage with new
+              ideas. Our goal is to make technical concepts more approachable
+              while recognizing that programming languages and technical terms
+              may still use English.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Who can benefit from this advocacy?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Students, young people, beginners, educators, and anyone
+              interested in understanding technology can benefit from
+              accessible explanations and shared learning.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How can I connect with AlgoFilipino?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Visit our official Facebook page to follow our updates,
+              participate in conversations, and inquire about ways to
+              support the initiative.
+              <a href="https://www.facebook.com/AlgoFilipino"
+                target="_blank" rel="noopener noreferrer">Visit AlgoFilipino on Facebook ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="#home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M4 7h7l-4 7 4 7H4M15 7l5 14M24 7l-5 14"
+                  stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <span class="brand-name">AlgoFilipino</span>
+              <span class="brand-sub">WIKA AT TEKNOLOHIYA</span>
+            </span>
+          </a>
+          <p>
+            Advancing technology education through the Filipino language.
+            Making knowledge more accessible, one learner at a time.
+          </p>
+        </div>
+
+        <div>
+          <h4>EXPLORE</h4>
+          <div class="footer-links">
+            <a href="#about">About Us</a>
+            <a href="#focus">Our Focus</a>
+            <a href="#learning">Learning Themes</a>
+            <a href="#community">Community</a>
+            <a href="#faq">FAQs</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>CONNECT</h4>
+          <div class="footer-links">
+            <a href="https://www.facebook.com/AlgoFilipino"
+              target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+            <a href="https://www.instagram.com/algofilipino/"
+              target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            <a href="mailto:hello@algofilipino.com">Email us</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> AlgoFilipino. All rights reserved.</span>
+        <span>Built around a simple idea: <a href="#about">knowledge for everyone.</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="cookie-banner" id="cookieBanner"
+    role="dialog" aria-label="Cookie preferences" aria-live="polite">
+    <h3>Your privacy matters.</h3>
+    <p>
+      This website uses essential browser storage to remember your cookie
+      preference. This version does not install advertising or analytics
+      trackers. Read our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+      <button type="button" id="cookieReject">Essential only</button>
+      <button type="button" class="accept" id="cookieAccept">Got it</button>
+    </div>
+  </aside>
+
+  <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const header = document.getElementById("header");
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+      const backTop = document.getElementById("backTop");
+      const cookieBanner = document.getElementById("cookieBanner");
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      // Current year
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+      // Responsive navigation
+      function closeMenu() {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation");
+        menuToggle.textContent = "☰";
+        document.body.classList.remove("menu-open");
+      }
+
+      menuToggle.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute(
+          "aria-label",
+          isOpen ? "Close navigation" : "Open navigation"
+        );
+        menuToggle.textContent = isOpen ? "×" : "☰";
+        document.body.classList.toggle("menu-open", isOpen);
+      });
+
+      navLinks.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeMenu();
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 760) closeMenu();
+      });
+
+      // Header and back-to-top button
+      function onScroll() {
+        header.classList.toggle("scrolled", window.scrollY > 20);
+        backTop.classList.toggle("visible", window.scrollY > 450);
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      backTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: reducedMotion ? "auto" : "smooth"
+        });
+      });
+
+      // Reveal sections as they enter the viewport
+      const revealItems = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !reducedMotion) {
+        const revealObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach(item => revealObserver.observe(item));
+      } else {
+        revealItems.forEach(item => item.classList.add("in-view"));
+      }
+
+      // Accessible FAQ accordion
+      document.querySelectorAll(".faq-question").forEach(button => {
+        button.addEventListener("click", () => {
+          const item = button.closest(".faq-item");
+          const willOpen = !item.classList.contains("open");
+
+          document.querySelectorAll(".faq-item").forEach(other => {
+            other.classList.remove("open");
+            other.querySelector(".faq-question")
+              .setAttribute("aria-expanded", "false");
+          });
+
+          if (willOpen) {
+            item.classList.add("open");
+            button.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+
+      // Cookie preference: stores a simple choice in localStorage.
+      // No analytics or advertising cookies are installed by this template.
+      const cookieKey = "algofilipino_cookie_choice_v1";
+
+      try {
+        if (!localStorage.getItem(cookieKey)) {
+          window.setTimeout(() => {
+            cookieBanner.classList.add("visible");
+          }, 900);
+        }
+      } catch (error) {
+        // If storage is unavailable, keep the website usable.
+        cookieBanner.classList.add("visible");
+      }
+
+      function saveCookieChoice(choice) {
+        try {
+          localStorage.setItem(cookieKey, choice);
+        } catch (error) {
+          // The banner can still be dismissed for the current page view.
+        }
+        cookieBanner.classList.remove("visible");
+      }
+
+      document.getElementById("cookieAccept").addEventListener("click", () => {
+        saveCookieChoice("acknowledged");
+      });
+
+      document.getElementById("cookieReject").addEventListener("click", () => {
+        saveCookieChoice("essential-only");
+      });
+    })();
+  </script>
+</body>
+</html>
